@@ -1,19 +1,22 @@
 <?php
 
-namespace App\Traits\Tenants;
+namespace App\Services\Tenants;
 
 use App\Models\Tenant;
 use App\Models\User;
-use App\Settings\TenantSettings;
 use Illuminate\Support\Facades\Artisan;
+use Spatie\Permission\Models\Role;
 
-trait CanCreateTenant
+class CreateTenantService
 {
     public function createTenantData(
         Tenant $tenant,
         User $user,
         bool $isVerify = true
     ): user {
+        $this->findOrCreateCustomerRole();
+        $user->assignRole(config('const.client_role'));
+
         return $tenant->run(function () use ($user, $isVerify) {
             Artisan::call('app:tenant-permissions');
             $adminUser = new User;
@@ -29,25 +32,16 @@ trait CanCreateTenant
                 'commandname' => 'app:tenant-super',
                 // String// Array
             ]);
-            findOrCreateCustomerRole();
+            $this->findOrCreateCustomerRole();
 
             return $adminUser;
         });
     }
 
-    //    public function saveTenantInitTheme(Tenant $tenant, array $data)
-    //    {
-    //        return $tenant->run(function () use ($tenant, $data) {
-    //            $settings = app(TenantSettings::class);
-    //
-    //            if (isset($data["theme_name"])) {
-    //                $settings->theme_name = $data["theme_name"];
-    //            }
-    //            if ($data["theme_category"]) {
-    //                $settings->theme_category = $data["theme_category"];
-    //            }
-    //
-    //            $settings->save();
-    //        });
-    //    }
+    public function findOrCreateCustomerRole(): void
+    {
+        if (! Role::where('name', config('const.client_role'))->exists()) {
+            Role::create(['name' => config('const.client_role')]);
+        }
+    }
 }
