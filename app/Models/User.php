@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use LogicException;
 use Spatie\Permission\Traits\HasRoles;
 
 // TODO: add email verification
@@ -27,11 +28,20 @@ class User extends Authenticatable
     public function tenant(): BelongsTo
     {
         if (tenancy()->initialized) {
-            throw new \LogicException(
+            throw new LogicException(
                 'Tenant relationship not available in tenant context'
             );
         }
 
         return $this->belongsTo(Tenant::class);
+    }
+
+    public function hasTenant(): bool
+    {
+        if (tenancy()->initialized) {
+            return false;
+        }
+
+        return ! is_null($this->tenant_id);
     }
 }
