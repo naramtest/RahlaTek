@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Jobs\CreateFrameworkDirectoriesForTenant;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Features\SupportFileUploads\FilePreviewController;
+use Livewire\Livewire;
 use Stancl\JobPipeline\JobPipeline;
 use Stancl\Tenancy\Events;
 use Stancl\Tenancy\Jobs;
@@ -27,6 +30,8 @@ class TenancyServiceProvider extends ServiceProvider
     {
         $this->bootEvents();
         //        $this->mapRoutes();
+
+        $this->initLivewire();
 
         $this->makeTenancyMiddlewareHighestPriority();
     }
@@ -53,6 +58,7 @@ class TenancyServiceProvider extends ServiceProvider
                 JobPipeline::make([
                     Jobs\CreateDatabase::class,
                     Jobs\MigrateDatabase::class,
+                    CreateFrameworkDirectoriesForTenant::class,
                     // Jobs\SeedDatabase::class,
 
                     // Your own jobs to prepare the tenant.
@@ -137,6 +143,23 @@ class TenancyServiceProvider extends ServiceProvider
                 \Illuminate\Contracts\Http\Kernel::class
             ]->prependToMiddlewarePriority($middleware);
         }
+    }
+
+    public function initLivewire(): void
+    {
+        Livewire::setUpdateRoute(function ($handle) {
+            return Route::post('/livewire/update', $handle)->middleware(
+                'web',
+                'universal',
+                Middleware\InitializeTenancyByDomainOrSubdomain::class // or whatever tenancy middleware you use
+            );
+        });
+
+        FilePreviewController::$middleware = [
+            'web',
+            'universal',
+            Middleware\InitializeTenancyByDomainOrSubdomain::class,
+        ];
     }
 
     protected function mapRoutes()
