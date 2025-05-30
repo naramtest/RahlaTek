@@ -13,7 +13,7 @@ class DeleteTenantStorage
         File::deleteDirectory($event->tenant->run(fn () => storage_path()));
         Redis::connection()->del('r-k-tenants:'.$event->tenant->id);
         $event->tenant->run(function () {
-            //            Redis::connection('settings')->del('.tenant');
+            Redis::connection('settings')->del('.tenant');
         });
     }
 }
