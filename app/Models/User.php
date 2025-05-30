@@ -26,6 +26,12 @@ class User extends Authenticatable
 
     public function tenant(): HasOne
     {
+        if (tenancy()->initialized) {
+            throw new \LogicException(
+                'Tenant relationship not available in tenant context'
+            );
+        }
+
         return $this->hasOne(Tenant::class);
     }
 }
