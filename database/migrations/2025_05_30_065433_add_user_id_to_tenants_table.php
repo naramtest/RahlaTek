@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Models\Tenant;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,8 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tenants', function (Blueprint $table) {
-            $table->foreignIdFor(User::class);
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignIdFor(Tenant::class)->nullable()->constrained();
         });
     }
 
@@ -22,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('tenants', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['tenant_id']);
         });
     }
 };
