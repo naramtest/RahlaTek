@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\TenantResource\Pages;
+use App\Filament\Components\DateColumn;
 use App\Models\Tenant;
 use App\Models\User;
 use App\Traits\Tenants\CanRedirectTenant;
@@ -13,7 +14,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Hash;
@@ -34,20 +34,20 @@ class TenantResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Section::make(__('dashboard.user details'))
+            Section::make(__('admin.User Details'))
                 ->relationship('user')
                 ->schema([
                     TextInput::make('name')
                         ->required()
-                        ->label(__('dashboard.name')),
+                        ->label(__('general.Name')),
                     TextInput::make('email')
                         ->email()
                         ->required()
                         ->unique(ignoreRecord: true)
-                        ->label(__('dashboard.Email')),
+                        ->label(__('general.Email')),
 
                     TextInput::make('password')
-                        ->label(__('dashboard.password'))
+                        ->label(__('general.Password'))
                         ->password()
                         ->required(
                             fn (string $context): bool => $context === 'create'
@@ -70,12 +70,12 @@ class TenantResource extends Resource
                         }),
                 ])
                 ->columnSpan(1),
-            Section::make(__('dashboard.Tenant Details'))
+            Section::make('Clients Details')
                 ->schema([
                     TextInput::make('id')
                         ->required()
                         ->unique(ignoreRecord: true)
-                        ->label(__('dashboard.name'))
+                        ->label(__('general.Name'))
                         ->disabled(
                             fn (string $context): bool => $context === 'edit'
                         ),
@@ -103,28 +103,34 @@ class TenantResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id')
+                    ->sortable()
+                    ->searchable()
+                    ->label(__('general.Name')),
                 TextColumn::make('user.name')
                     ->sortable()
                     ->searchable()
-                    ->label(__('dashboard.name')),
+                    ->label('Username'),
                 TextColumn::make('user.email')
                     ->sortable()
                     ->searchable()
-                    ->label(__('dashboard.Email')),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime('M j, Y')
-                    ->label(__('dashboard.Created At'))
-                    ->sortable(),
+                    ->label(__('general.Email')),
+                DateColumn::make('created_at')->label(__('general.Created At')),
             ])
-            ->filters([DateRangeFilter::make('created_at')])
+            ->filters([
+                DateRangeFilter::make('created_at')->label(
+                    __('general.Created At')
+                ),
+            ])
             ->actions([
-                Action::make(__('dashboard.tenants.impersonate'))
-                    ->icon('gmdi-support-agent-o')
-                    ->color('info')
-                    ->url(function (Tenant $record) {
-                        return self::redirectTenant($record);
-                    })
-                    ->openUrlInNewTab(),
+                // TODO: add impersonate
+                //                Action::make(__('dashboard.tenants.impersonate'))
+                //                    ->icon('gmdi-support-agent-o')
+                //                    ->color('info')
+                //                    ->url(function (Tenant $record) {
+                //                        return self::redirectTenant($record);
+                //                    })
+                //                    ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -153,27 +159,27 @@ class TenantResource extends Resource
 
     public static function getLabel(): ?string
     {
-        return __('admin.Tenant');
+        return __('admin.Client');
     }
 
     public static function getModelLabel(): string
     {
-        return __('admin.Tenant');
+        return __('admin.Client');
     }
 
     public static function getNavigationLabel(): string
     {
-        return __('admin.Tenants');
+        return __('admin.Clients');
     }
 
     public static function getPluralLabel(): ?string
     {
-        return __('admin.Tenants');
+        return __('admin.Clients');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('admin.Tenants');
+        return __('admin.Clients');
     }
 
     public static function getNavigationGroup(): ?string

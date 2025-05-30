@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Jobs\CreateFrameworkDirectoriesForTenant;
+use App\Listeners\DeleteTenantStorage;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -73,7 +74,7 @@ class TenancyServiceProvider extends ServiceProvider
             Events\TenantSaved::class => [],
             Events\UpdatingTenant::class => [],
             Events\TenantUpdated::class => [],
-            Events\DeletingTenant::class => [],
+            Events\DeletingTenant::class => [DeleteTenantStorage::class],
             Events\TenantDeleted::class => [
                 JobPipeline::make([Jobs\DeleteDatabase::class])
                     ->send(function (Events\TenantDeleted $event) {
@@ -125,6 +126,23 @@ class TenancyServiceProvider extends ServiceProvider
         ];
     }
 
+    public function initLivewire(): void
+    {
+        Livewire::setUpdateRoute(function ($handle) {
+            return Route::post('/livewire/update', $handle)->middleware(
+                'web',
+                'universal',
+                Middleware\InitializeTenancyByDomainOrSubdomain::class // or whatever tenancy middleware you use
+            );
+        });
+
+        FilePreviewController::$middleware = [
+            'web',
+            'universal',
+            Middleware\InitializeTenancyByDomainOrSubdomain::class,
+        ];
+    }
+
     protected function makeTenancyMiddlewareHighestPriority()
     {
         $tenancyMiddleware = [
@@ -143,23 +161,6 @@ class TenancyServiceProvider extends ServiceProvider
                 \Illuminate\Contracts\Http\Kernel::class
             ]->prependToMiddlewarePriority($middleware);
         }
-    }
-
-    public function initLivewire(): void
-    {
-        Livewire::setUpdateRoute(function ($handle) {
-            return Route::post('/livewire/update', $handle)->middleware(
-                'web',
-                'universal',
-                Middleware\InitializeTenancyByDomainOrSubdomain::class // or whatever tenancy middleware you use
-            );
-        });
-
-        FilePreviewController::$middleware = [
-            'web',
-            'universal',
-            Middleware\InitializeTenancyByDomainOrSubdomain::class,
-        ];
     }
 
     protected function mapRoutes()
