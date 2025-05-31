@@ -16,7 +16,7 @@ trait CanRedirectTenant
         $protocol = app()->isProduction() ? 'https://' : 'http://';
 
         return $protocol.
-            $tenant->domains->first()->domain.
+            $tenant->domains?->first()?->domain.
             '.'.
             $baseUrl.
             '/impersonate/'.

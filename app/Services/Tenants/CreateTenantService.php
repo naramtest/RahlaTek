@@ -14,12 +14,10 @@ class CreateTenantService
         User $user,
         bool $isVerify = true
     ): user {
-        logger('naram');
         $this->findOrCreateCustomerRole();
         $user->assignRole(config('const.client_role'));
 
         return $tenant->run(function () use ($user, $isVerify) {
-            logger('naram');
             Artisan::call('app:tenant-permissions');
             $adminUser = new User;
 
@@ -29,8 +27,7 @@ class CreateTenantService
             if ($isVerify) {
                 $adminUser->email_verified_at = now();
             }
-            $result = $adminUser->save();
-            logger('naram');
+            $adminUser->save();
             Artisan::call('tenants:run', [
                 'commandname' => 'app:tenant-super',
                 // String// Array

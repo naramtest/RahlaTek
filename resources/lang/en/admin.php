@@ -8,4 +8,5 @@ return [
     'Administration' => 'Administration',
     'User Details' => 'User Details',
     'Impersonate' => 'Impersonate',
+    'Clients Details' => 'Clients Details',
 ];

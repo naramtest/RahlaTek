@@ -74,7 +74,7 @@ class TenantResource extends Resource
                         }),
                 ])
                 ->columnSpan(1),
-            Section::make('Clients Details')
+            Section::make(__('admin.Clients Details'))
                 ->schema([
                     TextInput::make('id')
                         ->required()
