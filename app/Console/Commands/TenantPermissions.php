@@ -32,6 +32,7 @@ class TenantPermissions extends Command
         $this->call('shield:generate', [
             '--all' => true,
             '--option' => 'permissions',
+            '--panel' => 'dashboard',
         ]);
     }
 }
