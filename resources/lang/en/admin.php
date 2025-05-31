@@ -7,4 +7,5 @@ return [
     'Client' => 'Client',
     'Administration' => 'Administration',
     'User Details' => 'User Details',
+    'Impersonate' => 'Impersonate',
 ];

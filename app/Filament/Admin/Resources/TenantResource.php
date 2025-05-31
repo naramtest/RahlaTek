@@ -12,12 +12,16 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Hash;
 use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
+use Str;
 
 class TenantResource extends Resource
 {
@@ -78,10 +82,26 @@ class TenantResource extends Resource
                         ->label(__('general.Name'))
                         ->disabled(
                             fn (string $context): bool => $context === 'edit'
-                        ),
+                        )
+                        ->afterStateUpdated(function (
+                            Set $set,
+                            Get $get,
+                            $state
+                        ) {
+                            if (
+                                ! empty($state) &&
+                                empty($get('domains.0.domain'))
+                            ) {
+                                $slug = Str::slug($state);
+                                $set('domains.0.domain', $slug);
+                            }
+                        })
+                        ->live(onBlur: true),
                     Repeater::make('domains')
                         ->relationship()
                         ->hiddenLabel()
+                        ->live(onBlur: true)
+                        ->defaultItems(0)
                         ->schema([
                             TextInput::make('domain')
                                 ->required()
@@ -124,13 +144,13 @@ class TenantResource extends Resource
             ])
             ->actions([
                 // TODO: add impersonate
-                //                Action::make(__('dashboard.tenants.impersonate'))
-                //                    ->icon('gmdi-support-agent-o')
-                //                    ->color('info')
-                //                    ->url(function (Tenant $record) {
-                //                        return self::redirectTenant($record);
-                //                    })
-                //                    ->openUrlInNewTab(),
+                Action::make(__('admin.Impersonate'))
+                    ->icon('gmdi-support-agent-o')
+                    ->color('info')
+                    ->url(function (Tenant $record) {
+                        return self::redirectTenant($record);
+                    })
+                    ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
