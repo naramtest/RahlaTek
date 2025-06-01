@@ -36,15 +36,33 @@
     </head>
 
     <body
-        class="font-cairo main-padding min-h-screen overflow-x-hidden bg-gradient-to-br from-[#D9E2E4] via-white to-[#D9E2E4]/50"
+        class="font-cairo min-h-screen overflow-x-hidden bg-gradient-to-br from-[#D9E2E4] via-white to-[#D9E2E4]/50"
     >
-        <!-- Header Component - Converted from React -->
+        <!-- Animated Background Elements -->
+        <div class="pointer-events-none fixed inset-0 overflow-hidden">
+            <div
+                class="absolute -right-40 -top-40 h-80 w-80 animate-pulse rounded-full bg-gradient-to-r from-[#32BA9A]/20 to-[#233446]/20 blur-3xl"
+            ></div>
+            <div
+                class="absolute -bottom-40 -left-40 h-80 w-80 animate-pulse rounded-full bg-gradient-to-r from-[#32BA9A]/20 to-[#151D26]/20 blur-3xl"
+                style="animation-delay: 1000ms"
+            ></div>
+            <div
+                class="absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 transform animate-pulse rounded-full bg-gradient-to-r from-[#233446]/10 to-[#32BA9A]/10 blur-3xl"
+                style="animation-delay: 500ms"
+            ></div>
+        </div>
+
+        <!-- Header Component -->
         <x-admin.layout.header />
 
         <!-- Main Content -->
-        <main>
+        <main class="main-padding relative z-10">
             {{ $slot }}
         </main>
+
+        <!-- Footer Component -->
+        <x-admin.layout.footer />
 
         @stack("scripts")
         @livewireScriptConfig

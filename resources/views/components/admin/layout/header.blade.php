@@ -1,5 +1,5 @@
 <header
-    {{ $attributes->class(["relative sticky top-0 z-50 border-b border-[#D9E2E4]/30 backdrop-blur-xl"]) }}
+    {{ $attributes->class(["main-padding relative sticky top-0 z-50 border-b border-[#D9E2E4]/30 backdrop-blur-xl"]) }}
 >
     <div class="flex items-center justify-between py-4">
         <!-- Logo Section -->
