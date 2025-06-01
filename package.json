@@ -23,6 +23,7 @@
         "vite": "^6.2.4"
     },
     "dependencies": {
+        "gsap": "^3.13.0",
         "prettier-plugin-blade": "^2.1.21"
     }
 }

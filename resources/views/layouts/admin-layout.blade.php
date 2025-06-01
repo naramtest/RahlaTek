@@ -28,7 +28,7 @@
         />
 
         <!-- Styles -->
-        @vite(["resources/css/app.css", "resources/js/app.js", "resources/css/admin.css"])
+        @vite(["resources/css/app.css", "resources/js/app.js", "resources/css/admin.css", "resources/js/admin/admin.js"])
         @stack("header-scripts")
 
         <!-- Livewire -->
