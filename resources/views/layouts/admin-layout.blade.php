@@ -61,6 +61,8 @@
             {{ $slot }}
         </main>
 
+        <!-- CTA Section -->
+        <x-admin.layout.cta-section />
         <!-- Footer Component -->
         <x-admin.layout.footer />
 
