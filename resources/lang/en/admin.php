@@ -9,4 +9,5 @@ return [
     'User Details' => 'User Details',
     'Impersonate' => 'Impersonate',
     'Clients Details' => 'Clients Details',
+    'Try Demo' => 'Try Demo',
 ];

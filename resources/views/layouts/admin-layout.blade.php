@@ -2,6 +2,9 @@
 <html
     lang="{{ str_replace("_", "-", app()->getLocale()) }}"
     dir="{{ app()->getLocale() == "en" ? "ltr" : "rtl" }}"
+    x-data="{
+        language: '{{ app()->getLocale() }}',
+    }"
 >
     <head>
         <meta charset="UTF-8" />
@@ -9,25 +12,40 @@
         @if (isset($title))
             {{ $title }}
         @else
-            <title>{{ getLocalAppName() }}</title>
+            <title>{{ config("app.name") }}</title>
         @endif
 
         {{ $seo ?? null }}
         {{ $graph ?? null }}
         {{ $keywords ?? null }}
 
+        <!-- Cairo Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet"
+        />
+
         <!-- Styles -->
-        @vite(["resources/css/app.css", "resources/js/app.js"])
+        @vite(["resources/css/app.css", "resources/js/app.js", "resources/css/admin.css"])
         @stack("header-scripts")
 
         <!-- Livewire -->
         @livewireStyles
     </head>
-    <body class="min-h-screen antialiased">
+
+    <body
+        class="font-cairo main-padding min-h-screen overflow-x-hidden bg-gradient-to-br from-[#D9E2E4] via-white to-[#D9E2E4]/50"
+    >
+        <!-- Header Component - Converted from React -->
+        <x-admin.layout.header />
+
         <!-- Main Content -->
         <main>
             {{ $slot }}
         </main>
+
         @stack("scripts")
         @livewireScriptConfig
     </body>

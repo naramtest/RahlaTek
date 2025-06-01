@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Stancl\Tenancy\Features\UserImpersonation;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomainOrSubdomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -19,16 +20,25 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 |
 */
 
-Route::middleware([
-    'web',
-    InitializeTenancyByDomainOrSubdomain::class,
-    PreventAccessFromCentralDomains::class,
-])->group(function () {
-    Route::get('/', function () {
-        return view('welcome');
-    });
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [
+            'localeSessionRedirect',
+            'localizationRedirect',
+            'localeViewPath',
+            'web',
+            InitializeTenancyByDomainOrSubdomain::class,
+            PreventAccessFromCentralDomains::class,
+        ],
+    ],
+    function () {
+        Route::get('/', function () {
+            return view('pages.admin.home');
+        });
 
-    Route::get('/impersonate/{token}', function ($token) {
-        return UserImpersonation::makeResponse($token);
-    });
-});
+        Route::get('/impersonate/{token}', function ($token) {
+            return UserImpersonation::makeResponse($token);
+        });
+    }
+);

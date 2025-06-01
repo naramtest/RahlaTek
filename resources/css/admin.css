@@ -1,0 +1,11 @@
+[x-cloak] {
+    display: none !important;
+}
+
+.font-cairo {
+    font-family: 'Cairo', sans-serif;
+}
+
+.main-padding {
+    @apply px-4 md:px-6 lg:px-10 xl:px-16;
+}
