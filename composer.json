@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.10.1",
         "malzariey/filament-daterangepicker-filter": "*",
         "mcamara/laravel-localization": "^2.3",
+        "pelmered/filament-money-field": "^1.5",
         "stancl/tenancy": "^3.9"
     },
     "require-dev": {

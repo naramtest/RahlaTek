@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -14,6 +13,9 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+
+    'money_currency' => env('MONEY_DEFAULT_CURRENCY', 'AED'),
+    'money_locale' => env('MONEY_DEFAULT_LOCALE', 'en_AE'),
 
     /*
     |--------------------------------------------------------------------------
@@ -100,9 +102,7 @@ return [
     'key' => env('APP_KEY'),
 
     'previous_keys' => [
-        ...array_filter(
-            explode(',', env('APP_PREVIOUS_KEYS', ''))
-        ),
+        ...array_filter(explode(',', env('APP_PREVIOUS_KEYS', ''))),
     ],
 
     /*
@@ -122,5 +122,4 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
-
 ];
