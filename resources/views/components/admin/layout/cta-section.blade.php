@@ -1,5 +1,5 @@
 <section
-    class="relative overflow-hidden bg-gradient-to-br from-[#32BA9A] via-[#233446] to-[#151D26] px-4 py-16 text-white"
+    class="relative overflow-hidden bg-gradient-to-br from-[#32BA9A] via-[#233446] to-[#151D26] px-4 py-20 text-white"
     x-data="ctaSection()"
     x-init="initCTA()"
 >
@@ -59,5 +59,4 @@
             {{ __("front.No credit card required • 14-day free trial") }}
         </p>
     </div>
-    <!-- Floating Animation Elements -->
 </section>

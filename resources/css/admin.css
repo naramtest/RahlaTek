@@ -1,5 +1,3 @@
-/* Add to resources/css/admin.css */
-
 [x-cloak] {
     display: none !important;
 }
@@ -11,5 +9,3 @@
 .main-padding {
     @apply px-4 md:px-6 lg:px-10 xl:px-16;
 }
-
-
