@@ -18,7 +18,8 @@
         "malzariey/filament-daterangepicker-filter": "*",
         "mcamara/laravel-localization": "^2.3",
         "pelmered/filament-money-field": "^1.5",
-        "stancl/tenancy": "^3.9"
+        "stancl/tenancy": "^3.9",
+        "ysfkaya/filament-phone-input": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
