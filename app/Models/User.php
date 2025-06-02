@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use LogicException;
@@ -43,5 +44,18 @@ class User extends Authenticatable
         }
 
         return ! is_null($this->tenant_id);
+    }
+
+    /**
+     * Check if the user is a driver
+     */
+    public function isDriver(): bool
+    {
+        return $this->driver()->exists();
+    }
+
+    public function driver(): HasOne
+    {
+        return $this->hasOne(Driver::class);
     }
 }
