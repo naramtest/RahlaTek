@@ -10,17 +10,18 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "ext-intl": "*",
         "bezhansalleh/filament-shield": "^3.3",
         "codeat3/blade-google-material-design-icons": "^1.20",
         "filament/filament": "^3.3",
+        "filament/spatie-laravel-translatable-plugin": "^3.3",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "malzariey/filament-daterangepicker-filter": "*",
         "mcamara/laravel-localization": "^2.3",
         "pelmered/filament-money-field": "^1.5",
         "stancl/tenancy": "^3.9",
-        "ysfkaya/filament-phone-input": "*",
-        "ext-intl": "*"
+        "ysfkaya/filament-phone-input": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
