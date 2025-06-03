@@ -23,12 +23,4 @@ abstract class MoneyModel extends Model
 
         $this->currencyService = app(CurrencyService::class);
     }
-
-    /**
-     * Get the currency service.
-     */
-    //    protected function currencyService(): CurrencyService
-    //    {
-    //        return $this->currencyService;
-    //    }
 }

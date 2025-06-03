@@ -137,12 +137,12 @@ class Booking extends Payable
 
     // Helper method to get the single customer
 
-    //    public function customer()
-    //    {
-    //        return $this->morphToMany(Customer::class, 'customerable')
-    //            ->withTimestamps()
-    //            ->limit(1); // Limit to one customer
-    //    }
+    public function customer()
+    {
+        return $this->morphToMany(Customer::class, 'customerable')
+            ->withTimestamps()
+            ->limit(1); // Limit to one customer
+    }
 
     protected function getReferenceNumberPrefix(): string
     {
