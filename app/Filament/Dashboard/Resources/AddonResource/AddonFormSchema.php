@@ -18,7 +18,7 @@ class AddonFormSchema
                     ->maxLength(255),
 
                 MoneyInput::make('price')
-                    ->label(__('dashboard.price'))
+                    ->label(__('dashboard.Total Cost'))
                     ->required(),
                 Forms\Components\Select::make('billing_type')
                     ->label(__('dashboard.billing_type'))
@@ -26,7 +26,7 @@ class AddonFormSchema
                     ->required(),
 
                 Forms\Components\Textarea::make('description')
-                    ->label(__('dashboard.description'))
+                    ->label(__('dashboard.Description'))
                     ->rows(3)
                     ->maxLength(65535),
 

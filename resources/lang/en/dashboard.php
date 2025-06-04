@@ -102,4 +102,7 @@ return [
     'client_information' => 'Client Information',
     'duration' => 'Duration',
     'Select or Create Customer' => 'Select or Create Customer',
+    'Addon' => 'Addon',
+
+    'billing_type' => 'Billing Type',
 ];

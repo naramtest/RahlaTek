@@ -25,7 +25,7 @@ class AddonTableSchema
                     ->sortable(),
 
                 MoneyColumn::make('price')
-                    ->label(__('dashboard.price'))
+                    ->label(__('dashboard.Total Cost'))
                     ->sortable('price'),
 
                 Tables\Columns\TextColumn::make('billing_type')
@@ -36,9 +36,7 @@ class AddonTableSchema
                     ->boolean()
                     ->sortable(),
 
-                DateColumn::make('created_at')->label(
-                    __('dashboard.created_at')
-                ),
+                DateColumn::make('created_at')->label(__('general.Created At')),
                 DateColumn::make('updated_at')->label(
                     __('dashboard.updated_at')
                 ),
@@ -52,7 +50,7 @@ class AddonTableSchema
                     ->label(__('dashboard.is_active'))
                     ->nullable(),
                 DateRangeFilter::make('created_at')->label(
-                    __('dashboard.Created At')
+                    __('general.Created At')
                 ),
             ])
             ->actions([
