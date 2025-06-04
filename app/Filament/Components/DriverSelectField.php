@@ -21,7 +21,7 @@ class DriverSelectField
             ->getSearchResultsUsing(function (string $search) {
                 return Driver::query()
                     ->join('users', 'drivers.user_id', '=', 'users.id')
-                    ->where('users.name', 'LIKE', "%{$search}%")
+                    ->where('users.name', 'LIKE', "%$search%")
                     ->limit(50)
                     ->get()
                     ->map(function ($driver) {

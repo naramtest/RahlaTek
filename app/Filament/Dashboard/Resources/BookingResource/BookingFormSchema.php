@@ -50,7 +50,7 @@ class BookingFormSchema
                     Forms\Components\TextInput::make('reference_number')
                         ->label(__('dashboard.reference_number'))
                         ->disabled()
-                        ->placeholder('Will be auto-generated')
+                        ->placeholder(__('dashboard.Will be auto-generated'))
                         ->maxLength(255),
                     Forms\Components\Select::make('vehicle_id')
                         ->label(__('dashboard.Vehicle'))
@@ -71,6 +71,7 @@ class BookingFormSchema
                     DriverSelectField::make()->live(),
 
                     MoneyInput::make('total_price')
+                        ->label(__('dashboard.Total Cost'))
                         ->required()
                         ->visible(fn () => notDriver()),
                 ])
@@ -149,7 +150,11 @@ class BookingFormSchema
                     ->hiddenLabel()
                     ->helperText(
                         new HtmlString(
-                            '<span class="text-danger-600 dark:text-danger-400">Customer will not receive any notification until status becomes Confirmed</span>'
+                            '<span class="text-danger-600 dark:text-danger-400">'.
+                                __(
+                                    'dashboard.Customer will not receive any notification until status becomes Confirmed'
+                                ).
+                                '</span>'
                         )
                     )
                     ->options(ReservationStatus::class)
@@ -170,7 +175,7 @@ class BookingFormSchema
             Forms\Components\Section::make(__('dashboard.booking_details'))
                 ->schema([
                     Forms\Components\Placeholder::make('created_at')
-                        ->label(__('dashboard.created_at'))
+                        ->label(__('general.Created At'))
                         ->inlineLabel()
                         ->content(
                             fn (?Booking $record): string => $record
