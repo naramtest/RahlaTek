@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\Model\HasSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Customer extends Model
 {
-    use SoftDeletes;
+    use HasSoftDeletes;
 
     protected $fillable = ['name', 'email', 'phone_number'];
 

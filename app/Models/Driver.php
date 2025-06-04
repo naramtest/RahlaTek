@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use App\Enums\Gender;
+use App\Traits\Model\HasSoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Storage;
 
 class Driver extends Model
 {
-    use SoftDeletes;
+    use HasSoftDeletes;
 
     protected $fillable = [
         'user_id',

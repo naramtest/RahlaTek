@@ -4,17 +4,17 @@ namespace App\Models;
 
 use App\Enums\Vehicle\FuelType;
 use App\Enums\Vehicle\GearboxType;
+use App\Traits\Model\HasSoftDeletes;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Storage;
 
 class Vehicle extends Model
 {
     // TODO:has notification
     //    use HasNotifications;
-    use SoftDeletes;
+    use HasSoftDeletes;
 
     protected $fillable = [
         'driver_id',

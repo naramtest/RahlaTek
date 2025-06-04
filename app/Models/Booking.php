@@ -5,10 +5,10 @@ namespace App\Models;
 use App\Enums\Reservation\ReservationStatus;
 use App\Models\Abstract\Payable;
 use App\Traits\CheckStatus;
-use App\Traits\HasReferenceNumber;
+use App\Traits\Model\HasReferenceNumber;
+use App\Traits\Model\HasSoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Money\Money;
 
 class Booking extends Payable
@@ -18,7 +18,7 @@ class Booking extends Payable
     // TODO:add Notification
     //    use HasNotifications;
     use HasReferenceNumber;
-    use SoftDeletes;
+    use HasSoftDeletes;
 
     protected $fillable = [
         'start_datetime',

@@ -105,4 +105,7 @@ return [
     'Addon' => 'Addon',
 
     'billing_type' => 'Billing Type',
+    'client_name' => 'Client Name',
+    'client_email' => 'Client Email',
+    'client_phone' => 'Client Phone',
 ];
