@@ -59,10 +59,7 @@ class DashboardPanelProvider extends PanelProvider
                 in: app_path('Filament/Dashboard/Widgets'),
                 for: 'App\\Filament\\Dashboard\\Widgets'
             )
-            ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
-            ])
+            ->widgets([Widgets\AccountWidget::class])
             ->viteTheme('resources/css/filament/dashboard/theme.css')
             ->middleware([
                 EncryptCookies::class,

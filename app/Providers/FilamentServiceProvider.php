@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Field;
 use Filament\Tables\Columns\TextColumn;
@@ -23,6 +24,18 @@ class FilamentServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        TranslatableTabs::configureUsing(function (
+            TranslatableTabs $component
+        ) {
+            $component
+                // locales labels
+                ->localesLabels([
+                    'en' => 'English',
+                    'ar' => 'Arabic',
+                ])
+                // default locales
+                ->locales(['en', 'ar']);
+        });
         Table::configureUsing(function (Table $table): void {
             $table->defaultSort('created_at', 'desc');
         });

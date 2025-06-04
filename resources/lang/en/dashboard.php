@@ -134,4 +134,11 @@ return [
     'Payment ID / Reference' => 'Payment ID / Reference',
     'Note' => 'Note',
     'Payment Additional information' => 'Payment Additional information',
+    'Slogan' => 'Slogan',
+    'About US' => 'About US',
+    'contacts' => 'Contacts',
+    'social_title' => 'Social Media',
+    'Platform' => 'Platform',
+    'General Inquiries' => 'General Inquiries',
+    'System Settings' => 'System Settings',
 ];
