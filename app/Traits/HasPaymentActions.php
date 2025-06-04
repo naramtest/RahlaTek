@@ -6,8 +6,6 @@ use App\Enums\Payments\PaymentStatus;
 use App\Exceptions\PaymentProcessException;
 use App\Models\Abstract\Payable;
 use App\Models\Payment;
-use App\Services\WhatsApp\Customer\Payment\CPaymentLinkHandler;
-use App\Services\WhatsApp\WhatsAppNotificationService;
 use Exception;
 use Filament\Notifications\Notification;
 
@@ -19,8 +17,10 @@ trait HasPaymentActions
             $payment = $this->generateCustomPaymentLink($record, $data);
             $this->sendPaymentLink($payment);
             $this->notifySuccess(
-                'Payment link generated & sent',
-                'A new payment link has been generated & sent to the customer.'
+                __('dashboard.Payment link generated & sent'),
+                __(
+                    'dashboard.A new payment link has been generated & sent to the customer'
+                )
             );
         } catch (PaymentProcessException $e) {
             $this->notifyError($e);
@@ -39,14 +39,14 @@ trait HasPaymentActions
                 'amount' => $data['amount'],
                 'currency_code' => config('app.money_currency'),
                 'status' => PaymentStatus::PENDING,
-                'note' => $data['amount'],
+                'note' => $data['note'],
             ]);
             // TODO: Add note to payment and send with the notification
         } catch (Exception $e) {
             throw new PaymentProcessException(
                 'Failed to generate payment link',
                 $e->getMessage(),
-                $e->getCode(),
+                0,
                 $e
             );
         }
@@ -60,11 +60,13 @@ trait HasPaymentActions
         try {
             $payable = $payment->payable;
 
-            app(WhatsAppNotificationService::class)->sendAndSave(
-                CPaymentLinkHandler::class,
-                $payable,
-                isUpdate: true
-            );
+            // TODO: send whatsapp notification
+
+            //            app(WhatsAppNotificationService::class)->sendAndSave(
+            //                CPaymentLinkHandler::class,
+            //                $payable,
+            //                isUpdate: true
+            //            );
         } catch (Exception $e) {
             throw new PaymentProcessException(
                 'Failed to send payment link',
@@ -85,8 +87,8 @@ trait HasPaymentActions
         try {
             $this->sendPaymentLink($payment);
             $this->notifySuccess(
-                'Payment link sent',
-                'The payment link has been sent to the customer.'
+                __('dashboard.Payment link sent'),
+                __('dashboard.The payment link has been sent to the customer')
             );
         } catch (PaymentProcessException $e) {
             $this->notifyError($e);
@@ -107,8 +109,10 @@ trait HasPaymentActions
         try {
             $payment = $this->generateCustomPaymentLink($record, $data);
             $this->notifySuccess(
-                'Payment link generated',
-                'A new payment link has been generated successfully.'
+                __('dashboard.Payment link generated'),
+                __(
+                    'dashboard.A new payment link has been generated successfully'
+                )
             );
 
             return $payment;

@@ -16,15 +16,13 @@ return new class extends Migration
             $table->morphs('payable');
             $table->unsignedBigInteger('amount');
             $table->string('currency_code', 3);
-            $table->string('payment_method');
+            $table->string('payment_method')->nullable();
             $table->string('status');
             $table->string('provider_id')->nullable();
             $table->json('metadata')->nullable();
             $table->timestamps();
             $table->text('note')->nullable();
             $table->dateTime('paid_at')->nullable();
-            // Make payment_method nullable
-            $table->string('payment_method')->nullable()->change();
         });
     }
 

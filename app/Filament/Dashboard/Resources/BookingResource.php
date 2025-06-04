@@ -2,6 +2,7 @@
 
 namespace App\Filament\Dashboard\Resources;
 
+use App\Filament\Dashboard\RelationManagers\PaymentsRelationManager;
 use App\Filament\Dashboard\Resources\BookingResource\BookingFormSchema;
 use App\Filament\Dashboard\Resources\BookingResource\BookingTableSchema;
 use App\Filament\Dashboard\Resources\BookingResource\Pages;
@@ -34,10 +35,10 @@ class BookingResource extends Resource
         return BookingTableSchema::schema($table);
     }
 
-    //    public static function getRelations(): array
-    //    {
-    //        return [PaymentsRelationManager::class];
-    //    }
+    public static function getRelations(): array
+    {
+        return [PaymentsRelationManager::class];
+    }
 
     public static function getPages(): array
     {
