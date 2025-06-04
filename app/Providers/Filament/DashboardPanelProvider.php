@@ -28,6 +28,7 @@ class DashboardPanelProvider extends PanelProvider
             ->id('dashboard')
             ->path('dashboard')
             ->databaseNotifications()
+            ->sidebarWidth('md')
             ->login()
             ->plugins([
                 SpatieLaravelTranslatablePlugin::make()->defaultLocales([

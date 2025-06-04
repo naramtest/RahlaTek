@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Tenant\InvoiceController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Stancl\Tenancy\Features\UserImpersonation;
@@ -39,6 +40,24 @@ Route::group(
 
         Route::get('/impersonate/{token}', function ($token) {
             return UserImpersonation::makeResponse($token);
+        });
+
+        Route::controller(InvoiceController::class)->group(function () {
+            Route::get('/payments/invoice', 'downloadInvoice')
+                ->name('payment.invoice')
+                ->middleware('signed');
+
+            Route::middleware(['auth'])->group(function () {
+                Route::get(
+                    '/admin/payment/{payment}/invoice/preview',
+                    'previewInvoice'
+                )->name('admin.payment.invoice.preview');
+
+                Route::get(
+                    '/admin/payment/{payment}/invoice/download',
+                    'downloadInvoice'
+                )->name('admin.payment.invoice.download');
+            });
         });
     }
 );

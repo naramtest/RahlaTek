@@ -9,4 +9,7 @@ return [
     'Dashboard' => 'Dashboard',
     'Testimonials' => 'Testimonials',
     'Login' => 'Login',
+    'Car Booking Service' => 'Car Booking Service',
+    'Car Rental Service' => 'Car Rental Service',
+    'Shipping Service' => 'Shipping Service',
 ];

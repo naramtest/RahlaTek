@@ -101,9 +101,10 @@ class InvoiceService
         $locale = app()->getLocale();
 
         return new Seller(
-            company: $this->infoSettings->name[$locale] ?? config('app.name'),
+            company: $this->infoSettings->getNameByLocale($locale) ??
+                config('app.name'),
             address: new Address(
-                street: $this->infoSettings->address[$locale] ?? '',
+                street: $this->infoSettings->getAddressByLocale($locale) ?? '',
                 postal_code: '',
                 city: '',
                 country: ''
@@ -179,9 +180,9 @@ class InvoiceService
         $modelType = class_basename($payable);
 
         return match ($modelType) {
-            'Booking' => 'Car Booking Service',
-            'Rent' => 'Car Rental Service',
-            'Shipping' => 'Shipping Service',
+            'Booking' => __('general.Car Booking Service'),
+            'Rent' => __('general.Car Rental Service'),
+            'Shipping' => __('general.Shipping Service'),
             default => $modelType.' Service',
         };
     }
@@ -191,6 +192,7 @@ class InvoiceService
      */
     protected function generateItemDescription($payable): string
     {
+        //        TODO:Need Translate
         $modelType = class_basename($payable);
         $reference = $payable->reference_number ?? $payable->id;
 

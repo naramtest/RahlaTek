@@ -121,18 +121,18 @@ class PaymentsRelationManager extends RelationManager
                 ),
                 Tables\Actions\DeleteAction::make(),
 
-                //                Tables\Actions\Action::make('download')
-                //                    ->url(function (Payment $record) {
-                //                        return route('admin.payment.invoice.preview', [
-                //                            'payment' => $record,
-                //                        ]);
-                //                    })
-                //                    ->visible(
-                //                        fn (Payment $record) => $record->isPaid() or
-                //                            $record->isRefunded()
-                //                    )
-                //                    ->color('info')
-                //                    ->icon('gmdi-download-o'),
+                Tables\Actions\Action::make('download')
+                    ->url(function (Payment $record) {
+                        return route('admin.payment.invoice.download', [
+                            'payment' => $record,
+                        ]);
+                    })
+                    ->visible(
+                        fn (Payment $record) => $record->isPaid() or
+                            $record->isRefunded()
+                    )
+                    ->color('info')
+                    ->icon('gmdi-download-o'),
 
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make('sendPaymentLink')

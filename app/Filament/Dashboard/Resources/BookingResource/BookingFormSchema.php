@@ -167,7 +167,7 @@ class BookingFormSchema
             Forms\Components\Section::make('Payment Status')
                 ->schema([
                     Forms\Components\ViewField::make('payment_status')->view(
-                        'filament.components.payment-status-summary'
+                        'filament.dashboard.components.payment-status-summary'
                     ),
                 ])
                 ->hidden(fn (string $operation) => $operation === 'create')
