@@ -27,6 +27,7 @@ class DashboardPanelProvider extends PanelProvider
         return $panel
             ->id('dashboard')
             ->path('dashboard')
+            ->databaseNotifications()
             ->login()
             ->plugins([
                 SpatieLaravelTranslatablePlugin::make()->defaultLocales([

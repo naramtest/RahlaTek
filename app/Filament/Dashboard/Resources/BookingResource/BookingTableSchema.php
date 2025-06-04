@@ -3,8 +3,10 @@
 namespace App\Filament\Dashboard\Resources\BookingResource;
 
 use App\Enums\Reservation\ReservationStatus;
+use App\Filament\Actions\Reservation\ReservationActions;
 use App\Filament\Components\Customer\CustomerTableComponent;
 use App\Filament\Components\DateColumn;
+use App\Filament\Exports\BookingExporter;
 use Exception;
 use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
@@ -90,7 +92,7 @@ class BookingTableSchema
                 Tables\Actions\ForceDeleteAction::make(),
                 Tables\Actions\RestoreAction::make(),
 
-                //                ReservationActions::make()->visible(fn () => notDriver()),
+                ReservationActions::make()->visible(fn () => notDriver()),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -98,11 +100,10 @@ class BookingTableSchema
                     Tables\Actions\ForceDeleteBulkAction::make(),
                     Tables\Actions\RestoreBulkAction::make(),
                 ]),
-                // TODO:add exporter
 
-                //                Tables\Actions\ExportBulkAction::make()
-                //                    ->label(__("dashboard.export_selected"))
-                //                    ->exporter(BookingExporter::class),
+                Tables\Actions\ExportBulkAction::make()->exporter(
+                    BookingExporter::class
+                ),
             ])
             ->defaultSort('created_at', 'desc');
     }

@@ -108,4 +108,9 @@ return [
     'client_name' => 'Client Name',
     'client_email' => 'Client Email',
     'client_phone' => 'Client Phone',
+
+    'mark_as_completed' => 'Mark as Completed',
+    'mark_as_active' => 'Mark as Active',
+    'Confirm' => 'Mark as Confirm',
+    'Cancel' => 'Mark as Cancel',
 ];

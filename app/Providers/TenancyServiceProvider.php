@@ -10,8 +10,6 @@ use App\Listeners\DeleteTenantStorage;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Livewire\Features\SupportFileUploads\FilePreviewController;
-use Livewire\Livewire;
 use Stancl\JobPipeline\JobPipeline;
 use Stancl\Tenancy\Events;
 use Stancl\Tenancy\Jobs;
@@ -32,8 +30,6 @@ class TenancyServiceProvider extends ServiceProvider
     {
         $this->bootEvents();
         //        $this->mapRoutes();
-
-        $this->initLivewire();
 
         $this->makeTenancyMiddlewareHighestPriority();
     }
@@ -129,23 +125,6 @@ class TenancyServiceProvider extends ServiceProvider
         ];
     }
 
-    public function initLivewire(): void
-    {
-        Livewire::setUpdateRoute(function ($handle) {
-            return Route::post('/livewire/update', $handle)->middleware(
-                'web',
-                'universal',
-                Middleware\InitializeTenancyByDomainOrSubdomain::class // or whatever tenancy middleware you use
-            );
-        });
-
-        FilePreviewController::$middleware = [
-            'web',
-            'universal',
-            Middleware\InitializeTenancyByDomainOrSubdomain::class,
-        ];
-    }
-
     protected function makeTenancyMiddlewareHighestPriority()
     {
         $tenancyMiddleware = [
@@ -165,6 +144,8 @@ class TenancyServiceProvider extends ServiceProvider
             ]->prependToMiddlewarePriority($middleware);
         }
     }
+
+    public function initLivewire(): void {}
 
     protected function mapRoutes()
     {
