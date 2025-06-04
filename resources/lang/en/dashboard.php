@@ -78,4 +78,7 @@ return [
     'reference' => 'Reference',
     'notes' => 'Notes',
     'updated_at' => 'Last Updated',
+    'Bookings' => 'Bookings',
+    'Booking' => 'Booking',
+    'Operations' => 'Operations',
 ];
